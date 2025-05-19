@@ -4,10 +4,10 @@ from scipy.optimize import curve_fit
 class block(object):
 
     ''' assumes blocks are objects that have a mass and x-axis velocity
-    models blocks for thier behaviours (collisions) '''
+    models blocks for their behaviours (collisions) '''
 
 
-    def __init__(self: "block", mass: float, velocity: float) -> None:
+    def __init__(self: "block", mass: float|int, velocity: float|int) -> None:
 
         self.mass = mass
         self.velocity = velocity
@@ -15,7 +15,7 @@ class block(object):
 
     def collide(self: "block", other: "block") -> None:
 
-        '''changes the velocities of each block in occurdance with physics'''
+        '''changes the velocities of each block in accordance with physics'''
         
         m1, v1 = self.mass, self.velocity
         m2, v2 = other.mass, other.velocity
@@ -39,11 +39,18 @@ class block(object):
         self.velocity = velocity
 
 
+# a simulation of the pi collisions scenario
+def collision_simulation(mass_factor: float|int) -> tuple[int, list[float], list[float]]:
 
-def collision_simulation(mass_factor: float) -> tuple[int, list, list]:
+    ''' assumes 1 block is mass_factor times as massive as a secondstationary block and is initially
+        incumbant on said block with unit negative velocity
+        
+        simulates linear elastic collision between 2 blocks and a wall as seen in the pi collisions scenario
+        the simulation does not factor, measure or utilize time
 
-    L1 = []
-    L2 = []
+        returns the number of collisions that occur and a list of velocities in each collision'''
+
+    L1, L2 = [], []
     b1 = block(mass_factor, -1.0)
     b2 = block(1.0, 0.0)
     collision_count = 0
@@ -65,11 +72,18 @@ def collision_simulation(mass_factor: float) -> tuple[int, list, list]:
 
     return collision_count, L1, L2
 
-def plot_VelocityVsVelocity(mass_factor):
+def plot_VelocityVsVelocity(mass_factor: float|int) -> None:
+
+    ''' plots velocity of one block versus another which is mass_factor times as massive 
+        and incumbant with unit negative velocity on a set up as described by the pi collisions scenario '''
+
     collision_count, L1, L2 = collision_simulation(mass_factor)
     plt.plot(L1, L2, label = f"collisions = {collision_count}")
 
-def plot_VelocityVsCollision(mass_factor):
+def plot_VelocityVsCollision(mass_factor: float|int) -> None:
+
+    ''' plots velocity of the more massive block (as described in the pi collisions scenario) 
+        at even numbered collisions versus the collision number at fits a 3 degree polynomial onto the curve'''
 
     collision_count, L1, _ = collision_simulation(mass_factor)
 
@@ -88,6 +102,9 @@ def plot_VelocityVsCollision(mass_factor):
 
 def plot(title: str, x_label: str, y_label: str, f: "function", \
          mass_factor: float) -> None:
+    
+    ''' assigns titles and saves a figure'''
+
     plt.figure()
     plt.title(title)
     plt.xlabel(x_label)
