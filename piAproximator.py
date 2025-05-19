@@ -97,12 +97,3 @@ def plot(title: str, x_label: str, y_label: str, f: "function", \
 
     plt.legend()
     plt.savefig(title)
-
-plot("velocity_plot1", "block1", "block2", plot_VelocityVsVelocity, 1)
-plot("velocity_plot2", "block1", "block2", plot_VelocityVsVelocity, 10**2)
-plot("velocity_plot3", "block1", "block2", plot_VelocityVsVelocity, 10**4)
-plot("velocity_plot4", "block1", "block2", plot_VelocityVsVelocity, 10**6)
-
-plot("VelocityVsCollision2", "block1", "block2", plot_VelocityVsCollision, 10**2)
-plot("VelocityVsCollision3", "block1", "block2", plot_VelocityVsCollision, 10**4)
-plot("VelocityVsCollision4", "block1", "block2", plot_VelocityVsCollision, 10**6)
