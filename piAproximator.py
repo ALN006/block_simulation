@@ -126,5 +126,3 @@ def quadratic(x, a, b, c):
     return a*x**2 + b*x**1 + c
 def linear(x,a,b):
     return a*x + b
-
-plot("VelocityVsCollision1","collision","velocity",plot_VelocityVsCollision,100,None)
