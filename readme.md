@@ -19,7 +19,7 @@ If one block is `100^n` times heavier than another, and both undergo linear elas
 ## 📊 Visualizations
 
 - `plot_VelocityVsVelocity`: Phase diagram of block velocities versuse each other to form an ellipse
-- `plot_VelocityVsCollision`: Block velocity vs. collision count with cubic fit 
+- `plot_VelocityVsCollision`: Block velocity vs. collision count with various fits 
 
 ## 🛠 Requirements
 
