@@ -72,15 +72,17 @@ def collision_simulation(mass_factor: float|int) -> tuple[int, list[float], list
 
     return collision_count, L1, L2
 
-def plot_VelocityVsVelocity(mass_factor: float|int) -> None:
+def plot_VelocityVsVelocity(mass_factor: float|int, model_f: "function" = None) -> None:
 
     ''' plots velocity of one block versus another which is mass_factor times as massive 
         and incumbant with unit negative velocity on a set up as described by the pi collisions scenario '''
 
     collision_count, L1, L2 = collision_simulation(mass_factor)
     plt.plot(L1, L2, label = f"collisions = {collision_count}")
+    if model_f:
+        poly_fit(np.array(L1), L2, model_f)
 
-def plot_VelocityVsCollision(mass_factor: float|int) -> None:
+def plot_VelocityVsCollision(mass_factor: float|int, model_f: "function") -> None:
 
     ''' plots velocity of the more massive block (as described in the pi collisions scenario) 
         at even numbered collisions versus the collision number at fits a 3 degree polynomial onto the curve'''
@@ -89,19 +91,13 @@ def plot_VelocityVsCollision(mass_factor: float|int) -> None:
 
     y_vals = np.array([L1[i] for i in range(len(L1)) if i%2 == 0])
     x_vals = np.array([i for i in range(len(L1)) if i%2 == 0])
-    
-    def model_f(x, a, b, c, d):
-        return a*x**3 + b*x**2 + c*x**1 + d
-    
-    constants, _ = curve_fit(model_f, x_vals, y_vals)
-    a, b, c, d = constants
-    estimates = a*x_vals**3 + b*x_vals**2 + c*x_vals**1 + d
 
     plt.scatter(x_vals, y_vals, label = f"collisions = {collision_count}", s= 10)
-    plt.plot(x_vals, estimates, label = "3 degree fit", c = "red")
+    if model_f:
+        poly_fit(x_vals, y_vals, model_f)
 
 def plot(title: str, x_label: str, y_label: str, f: "function", \
-         mass_factor: float) -> None:
+         mass_factor: float, model_f: "function" = None) -> None:
     
     ''' assigns titles and saves a figure'''
 
@@ -110,7 +106,25 @@ def plot(title: str, x_label: str, y_label: str, f: "function", \
     plt.xlabel(x_label)
     plt.ylabel(y_label)
 
-    f(mass_factor)
+    f(mass_factor, model_f)
 
     plt.legend()
     plt.savefig(title)
+
+def poly_fit(x_vals, y_vals, model_f):
+    constants, _ = curve_fit(model_f, x_vals, y_vals)
+    pow = len(constants) - 1
+    estimates = np.array([0.0]*len(x_vals))
+    for i in constants:
+        estimates += i*x_vals**pow
+        pow -= 1
+    plt.plot(x_vals, estimates, label = f"{len(constants) -1 } degree fit", c= "red")
+    
+def cubic(x, a, b, c, d):
+    return a*x**3 + b*x**2 + c*x**1 + d
+def quadratic(x, a, b, c):
+    return a*x**2 + b*x**1 + c
+def linear(x,a,b):
+    return a*x + b
+
+plot("VelocityVsCollision1","collision","velocity",plot_VelocityVsCollision,100,None)
