@@ -7,19 +7,21 @@ I set out to verify for myself the suprising facts presented in it and with this
 
 ## 📌 Principle
 
-If one block is `100^n` times heavier than another, and both undergo linear elastic collisions, the total number of collisions equals the first `n` digits of π.
+If one block is `100^n` times heavier than another, and both undergo linear elastic collisions with a wall, the total number of collisions equals the first `n` digits of π.
 
 ## 🧪 How It Works
 
-- Two blocks: one with mass `m`, another with mass `100^n * m`
+- There are two blocks: one with mass `m`, another with mass `100^n * m`
 - Initially The heavier block moves toward the lighter block and a wall with unit velocity and made to collide
 - Each elastic collision (with wall or other block) is counted
-- Total collisions = Digits of π !
+- Total collisions = Digits of π 
 
 ## 📊 Visualizations
 
-- `plot_VelocityVsVelocity`: Phase diagram of block velocities versuse each other to form an ellipse
-- `plot_VelocityVsCollision`: Block velocity vs. collision count with various fits 
+- `plot_VelocityVsVelocity`: Phase diagram of block root mass * velocities versuse each other to form an circle
+(conservation of energy)
+- `plot_VelocityVsCollision`: Smaller block velocity vs. collision count with various fits 
+(fun)
 
 ## 🛠 Requirements
 

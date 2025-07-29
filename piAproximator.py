@@ -73,7 +73,7 @@ def plot_VelocityVsVelocity(mass_factor: float | int, model_f=None) -> None:
     and incumbant with unit negative velocity on a set up as described by the pi collisions scenario"""
 
     collision_count, L1, L2 = collision_simulation(mass_factor)
-    plt.plot(L1, L2, label=f"collisions = {collision_count}")
+    plt.plot(np.array(L1)*mass_factor**0.5,L2, label=f"collisions = {collision_count}")
     if model_f:
         poly_fit(np.array(L1), L2, model_f)
 
@@ -102,8 +102,8 @@ def plot(
 ) -> None:
     """assigns titles and saves a figure"""
 
-    plt.figure()
-    plt.title(title)
+    plt.figure(figsize=(7,7))
+    plt.title(title + f" (mass factor {mass_factor})")
     plt.xlabel(x_label)
     plt.ylabel(y_label)
 
